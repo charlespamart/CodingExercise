@@ -7,7 +7,7 @@ namespace CodingExercise;
 [Route("[controller]")]
 public class MyEntityController : ControllerBase
 {
-    private CodingExerciseContext _context { get; set; }
+    private CodingExerciseContext _context { get; }
 
     public MyEntityController(CodingExerciseContext context)
     {
@@ -23,7 +23,7 @@ public class MyEntityController : ControllerBase
         string? name,
         string? firstName)
     {
-        _context.MyEntity.Add(new MyEntityData() { Id = int.Parse(id), name = name });
+        var tm = _context.MyEntity.AddAsync(new MyEntityData { Id = int.Parse(id), name = name }).Result;
 
         return Ok();
     }
@@ -32,6 +32,6 @@ public class MyEntityController : ControllerBase
     [Route("{id}")]
     public IActionResult Get(string id)
     {
-        return Ok(_context.MyEntity.Where(x => x.Id == int.Parse(id)).FirstOrDefault());
+        return Ok(_context.MyEntity.Where(x => x.Id == int.Parse(id)).FirstOrDefaultAsync().Result);
     }
 }
