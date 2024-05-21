@@ -13,7 +13,7 @@ public class MyEntityController : ControllerBase
     {
         var options = new DbContextOptionsBuilder<CodingExerciseContext>();
         options.UseInMemoryDatabase("CodingExercise");
-       
+
         _context = new CodingExerciseContext(options.Options);
     }
 
@@ -33,5 +33,15 @@ public class MyEntityController : ControllerBase
     public IActionResult Get(string id)
     {
         return Ok(_context.MyEntity.Where(x => x.Id == int.Parse(id)).FirstOrDefaultAsync().Result);
+    }
+
+    [HttpPost]
+    [Route("externalapi")]
+    public IActionResult CallExternalAPI()
+    {
+        var httpClient = new HttpClient();
+        var queryString = new StringContent("This is a content");
+        var response = httpClient.PostAsync(new Uri("thisisanurl.com"), queryString).Result;
+        return Ok(response.Content.ReadAsStringAsync().Result);
     }
 }

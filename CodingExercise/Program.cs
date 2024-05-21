@@ -1,14 +1,14 @@
 using CodingExercise;
 using Microsoft.EntityFrameworkCore;
 
-const string DBName = "CodingExerciseDB";
+const string dbName = "CodingExerciseDB";
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CodingExerciseContext>(opt =>
-    opt.UseInMemoryDatabase(DBName));
+    opt.UseInMemoryDatabase(dbName));
 
 var app = builder.Build();
 
