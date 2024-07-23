@@ -36,7 +36,7 @@ public class MyEntityController : ControllerBase
     }
 
     [HttpPost]
-    [Route("externalapi")]
+    [Route("getentityinformations")]
     public IActionResult CallExternalAPI()
     {
         var httpClient = new HttpClient();
